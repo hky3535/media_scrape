@@ -1,5 +1,9 @@
+"""
+何恺悦 hekaiyue 2021-03-14
+"""
 import re
 import os
+import requests
 
 
 class Basic:
@@ -24,13 +28,14 @@ class Basic:
         matches = re.findall(pattern, raw)
         if len(matches) == 1:
             return True, matches[0]
-        return False, f"无法获取有效url: {raw}"
+        return False, f"无法获取有效url：{raw}"
 
-    def save(self, source, title, content):
+    def save(self, source, title, url):
+        content = requests.get(url).content
         title = self.sanitize(title)
         try:
             save_dir = f"{self.base_dir}/download_temp/[{source}]{title}.mp4"
             open(save_dir, "wb").write(content)
-            return True, save_dir
+            return True, f"文件写入成功：{save_dir}"
         except Exception as e:
-            return False, "文件写入失败"
+            return False, f"文件写入失败：{e}"

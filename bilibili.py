@@ -1,3 +1,6 @@
+"""
+何恺悦 hekaiyue 2021-03-14
+"""
 import requests
 import re
 import urllib
@@ -15,33 +18,32 @@ class Bilibili:
             'SESSDATA': ''
         }
 
-    def download(self, url):
+    def scrape_url(self, url):
         try:
-            page = requests.get(url=url, headers=self.headers, cookies=self.cookies).content.decode('utf8')                                                 # 获取到播放页面
+            page = requests.get(url=url, headers=self.headers, cookies=self.cookies).content.decode('utf8')
         except Exception as e:
-            return False, "B站页面爬取失败"
+            return False, f"B站页面爬取失败：{e}"
 
         try:
             # 获取到标题和链接
             title = re.search(r'<title.*?>(.*?)</title>', page).group(1)
             url = re.findall(r'"baseUrl":"(.*?)"', page)[0]
-            content = requests.get(url).content
-            return True, (title, content)
+            return True, (title, url)
         except Exception as e:
-            return False, "B站视频爬取失败"
+            return False, f"B站视频爬取失败：{e}"
 
 
 if __name__ == "__main__":
-    url = "随便什么干扰中文或者英文https://www.bilibili.com/video/BVxxxxx/"
+    url = "随便什么干扰中文或者英文https://www.bilibili.com/video/xxxxx"
 
     basic = basic.Basic()
     bilibili = Bilibili()
 
     ret, url = basic.extract_url(url)               # 从输入中抽取到真实页面地址
-    assert ret, url; print(f"获取到输入url: {url}")
+    assert ret, url; print(f"获取到输入url：{url}")
     
-    ret, res = bilibili.download(url)               # 根据页面地址定位到视频真实链接并进行下载
-    assert ret, res; print(f"微博视频爬取成功: {res[0]}")
+    ret, res = bilibili.scrape_url(url)             # 根据页面地址定位到视频真实链接并进行下载
+    assert ret, res; print(f"B站视频爬取成功：{res[0]}")
     
     ret, res = basic.save("bilibili", *res)         # 将下载视频保存到本地
-    assert ret, res; print(f"微博视频保存成功: {res}")
+    assert ret, res; print(f"B站视频保存成功：{res}")
