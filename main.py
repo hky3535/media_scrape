@@ -20,7 +20,7 @@ class Main:
 
     def main(self):
         # 输入下载源和原始分享链接
-        source = "bilibili"
+        source = "douyin"
         input_url = ""
 
         ret, page_url = self.basic.extract_url(input_url)
