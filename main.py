@@ -31,11 +31,11 @@ class Main:
         if not ret:
             return {"ret": ret, "res": media_info}
         
-        ret, identification_code = self.basic.save(source, *media_info)
+        ret, download_info = self.basic.save(source, *media_info)
         if not ret:
-            return {"ret": ret, "res": identification_code}
+            return {"ret": ret, "res": download_info}
         
-        return {"ret": ret, "res": identification_code}
+        return {"ret": ret, "res": download_info}
 
 
 if __name__ == "__main__":

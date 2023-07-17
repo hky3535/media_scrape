@@ -40,6 +40,6 @@ class Basic:
         try:
             save_dir = f"{self.storage_dir}/[{source}]{title}[{identification_code}].mp4"
             open(save_dir, "wb").write(content)         # 写入本地
-            return True, f"{identification_code}"
+            return True, [f"{identification_code}", f"{title}.mp4"]
         except Exception as e:
             return False, f"文件写入失败：{e}"
