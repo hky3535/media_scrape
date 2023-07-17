@@ -1,8 +1,11 @@
-import basic
+"""
+何恺悦 hekaiyue 2021-03-14
+"""
+from utils import basic
 
-import douyin
-import weibo
-import bilibili
+from utils import douyin
+from utils import weibo
+from utils import bilibili
 
 
 class Main:

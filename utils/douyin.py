@@ -6,8 +6,6 @@ import re
 import urllib
 import json
 
-import basic
-
 
 class Douyin:
     def __init__(self):

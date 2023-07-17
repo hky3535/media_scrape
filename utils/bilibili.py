@@ -6,8 +6,6 @@ import re
 import urllib
 import json
 
-import basic
-
 
 class Bilibili:
     def __init__(self):

@@ -4,8 +4,6 @@
 import requests
 import re
 
-import basic
-
 
 class Weibo:
     def __init__(self):
