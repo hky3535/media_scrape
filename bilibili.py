@@ -31,19 +31,3 @@ class Bilibili:
             return True, (title, url)
         except Exception as e:
             return False, f"B站视频爬取失败：{e}"
-
-
-if __name__ == "__main__":
-    url = "随便什么干扰中文或者英文https://www.bilibili.com/video/xxxxx"
-
-    basic = basic.Basic()
-    bilibili = Bilibili()
-
-    ret, url = basic.extract_url(url)               # 从输入中抽取到真实页面地址
-    assert ret, url; print(f"获取到输入url：{url}")
-    
-    ret, res = bilibili.scrape_url(url)             # 根据页面地址定位到视频真实链接并进行下载
-    assert ret, res; print(f"B站视频爬取成功：{res[0]}")
-    
-    ret, res = basic.save("bilibili", *res)         # 将下载视频保存到本地
-    assert ret, res; print(f"B站视频保存成功：{res}")

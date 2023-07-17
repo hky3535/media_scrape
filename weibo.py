@@ -24,19 +24,3 @@ class Weibo:
             return True, (title, url)
         except Exception as e:
             return False, f"微博视频爬取失败：{e}"
-
-
-if __name__ == "__main__":
-    url = "随便什么干扰中文或者英文http://m.weibo.cn/status/xxxxx?"
-
-    basic = basic.Basic()
-    weibo = Weibo()
-
-    ret, url = basic.extract_url(url)               # 从输入中抽取到真实页面地址
-    assert ret, url; print(f"获取到输入url：{url}")
-    
-    ret, res = weibo.scrape_url(url)                # 根据页面地址定位到视频真实链接并进行下载
-    assert ret, res; print(f"微博视频爬取成功：{res[0]}")
-    
-    ret, res = basic.save("weibo", *res)            # 将下载视频保存到本地
-    assert ret, res; print(f"微博视频保存成功：{res}")

@@ -19,8 +19,8 @@ class Douyin:
     def scrape_url(self, url):
         try:
             page = requests.get(url=url, headers=self.headers, allow_redirects=False).content.decode('utf8')    # 获取页面重定向
-            serial = re.search(r'video/(\d+)/', page).group(1)                                                  # 获取到真实的视频序列号
-            url = f"https://www.douyin.com/video/{serial}"                                                      # page_type = video/note
+            type_serial = re.search(r'/(video|note)/(\d+)/', page)                                              # 获取到真实的视频序列号
+            url = f"https://www.douyin.com/{type_serial.group(1)}/{type_serial.group(2)}"                       # page_type = video/note
             page = urllib.parse.unquote(requests.get(url=url, headers=self.headers).content.decode('utf8'))     # 获取到真实播放页面
         except Exception as e:
             return False, f"抖音页面爬取失败：{e}"
@@ -35,19 +35,3 @@ class Douyin:
             return True, (title, url)
         except Exception as e:
             return False, f"抖音视频爬取失败：{e}"
-
-
-if __name__ == "__main__":
-    url = "随便什么干扰中文或者英文https://v.douyin.com/xxxxx/"
-
-    basic = basic.Basic()
-    douyin = Douyin()
-
-    ret, url = basic.extract_url(url)               # 从输入中抽取到真实页面地址
-    assert ret, url; print(f"获取到输入url：{url}")
-    
-    ret, res = douyin.scrape_url(url)               # 根据页面地址定位到视频真实链接并进行下载
-    assert ret, res; print(f"抖音视频爬取成功：{res[0]}")
-    
-    ret, res = basic.save("douyin", *res)           # 将下载视频保存到本地
-    assert ret, res; print(f"抖音视频保存成功：{res}")
